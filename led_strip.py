@@ -24,6 +24,17 @@ class LedStrip(object):
     def off(self):
         self.set_color(0, 0, 0)
 
+    def get_colors(self):
+        pixels = []
+        for i in range(self.strip.numPixels()):
+            c = self.strip.getPixelColorRGB(i)
+            pixels.append({
+                'r': c.r,
+                'g': c.g,
+                'b': c.b,
+            })
+        return pixels
+
     def set_color(self, r: int, g: int, b: int):
         log.info(f'Setting color to ({r}, {g}, {b})')
         for i in range(self.strip.numPixels()):

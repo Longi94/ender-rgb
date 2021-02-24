@@ -6,6 +6,12 @@ from utils.network.response import ok
 bp = Blueprint('light', __name__, url_prefix='/api/light')
 
 
+@bp.route('/rgb', methods=['GET'])
+def get_colors():
+    colors = strip.get_colors()
+    return ok(None, colors)
+
+
 @bp.route('/rgb', methods=['POST'])
 @json_required_params(['r', 'g', 'b'])
 def set_color():
