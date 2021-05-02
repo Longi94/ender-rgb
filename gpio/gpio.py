@@ -6,7 +6,7 @@ from octopi import client
 
 log = logging.getLogger(__name__)
 
-BOUNCE_TIME = 200
+BOUNCE_TIME = 500
 
 POWER_BUTTON_PIN = config.getint('gpio', 'power_button_pin')
 LED_BUTTON_PIN = config.getint('gpio', 'led_button_pin')
