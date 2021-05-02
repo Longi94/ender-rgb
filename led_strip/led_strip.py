@@ -2,7 +2,7 @@ import logging
 from typing import Optional
 from rpi_ws281x import *
 from config import config
-from led_strip.effect import effects
+from led_strip.effect import effects, Effect
 
 log = logging.getLogger(__name__)
 
@@ -61,3 +61,15 @@ class LedStrip(object):
         if self.effect:
             self.effect.stop()
             self.effect = None
+
+    def is_on(self) -> bool:
+        for color in self.get_colors():
+            if color['r'] > 0 or color['g'] > 0 or color['b'] > 0:
+                return True
+        return False
+
+    def toggle(self):
+        if self.is_on():
+            self.off()
+        else:
+            self.set_color(255, 255, 255)

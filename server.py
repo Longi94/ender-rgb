@@ -1,4 +1,5 @@
 import logging
+import gpio
 from flask import Flask
 from blueprint import blueprints
 from logging_config import logging_config
@@ -32,4 +33,8 @@ if __name__ == '__main__':
     log.info(f'Running ender-rgb {__version__} on port {port}')
     log_endpoints(log, app)
 
-    app.run(host='0.0.0.0', port=port)
+    gpio.init()
+    try:
+        app.run(host='0.0.0.0', port=port)
+    finally:
+        gpio.close()
