@@ -1,4 +1,5 @@
 import logging
+import time
 import RPi.GPIO as GPIO
 from config import config
 from led_strip import strip
@@ -13,8 +14,23 @@ LED_BUTTON_PIN = config.getint('gpio', 'led_button_pin')
 STOP_BUTTON_PIN = config.getint('gpio', 'stop_button_pin')
 
 
+def pressed(pin):
+    for i in range(4):
+        if GPIO.input(pin) != 0:
+            return False
+
+        time.sleep(0.05)
+
+    return True
+
+
 def detect_callback(pin):
     log.info(f'Got callback on pin {pin}')
+
+    if not pressed(pin):
+        log.warn(f'Got false positive on pin {pin}')
+        return
+
     if pin == POWER_BUTTON_PIN:
         client.toggle_power()
     elif pin == LED_BUTTON_PIN:
